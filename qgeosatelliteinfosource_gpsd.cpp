@@ -189,6 +189,12 @@ void QGeoSatelliteInfoSourceGpsd::readGSV(const char *data, int size)
   */
   QList<QByteArray> parts = QByteArray::fromRawData(data,size).split(',');
   
+  bool gpsSats = parts[0].startsWith("$GP");
+  bool galileoSats = parts[0].startsWith("$GA");
+
+  if(!gpsSats && !galileoSats)
+      return;
+
   int senMax = parts[1].toUInt();
   int senIdx = parts[2].toUInt();
   int nSats  = parts[3].toUInt();
@@ -260,6 +266,12 @@ void QGeoSatelliteInfoSourceGpsd::readGSA(const char *data, int size)
   
   QList<QByteArray> parts = QByteArray::fromRawData(data, size).split(',');
   //int fixType = parts[2].toUInt();
+
+  bool gpsSats = parts[0].startsWith("$GP");
+  bool galileoSats = parts[0].startsWith("$GA");
+
+  if(!gpsSats && !galileoSats)
+      return;
 
   QSet<int> satsInUse;
   for(int i=3; i<15; ++i)
