@@ -203,7 +203,12 @@ void QGeoSatelliteInfoSourceGpsd::readGSV(const char *data, int size)
     int prn = parts[pos++].toUInt();
     int ele = parts[pos++].toUInt();
     int azi = parts[pos++].toUInt();
-    int snr = parts[pos++].toUInt();
+    QByteArray snrB = parts[pos++];
+    int chkIdx = snrB.indexOf("*");
+    if(chkIdx > -1)
+        snrB = snrB.left(chkIdx);
+
+    int snr = snrB.toUInt();
     info.setSatelliteSystem(QGeoSatelliteInfo::GPS);
     info.setSatelliteIdentifier(prn);
     info.setAttribute(QGeoSatelliteInfo::Elevation, ele);
