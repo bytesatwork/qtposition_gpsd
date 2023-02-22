@@ -59,6 +59,7 @@ private:
   bool parseNmeaData(const char* data, int size);
   void readGSA(const char* data, int size);
   void readGSV(const char* data, int size);
+  bool isReliableSatellite(const QByteArray &messageId);
 
   QIODevice* _device;
   QMap<int,QGeoSatelliteInfo> _satellitesInView;

@@ -189,6 +189,9 @@ void QGeoSatelliteInfoSourceGpsd::readGSV(const char *data, int size)
   */
   QList<QByteArray> parts = QByteArray::fromRawData(data,size).split(',');
   
+  if(!isReliableSatellite(parts[0]))
+      return;
+
   int senMax = parts[1].toUInt();
   int senIdx = parts[2].toUInt();
   int nSats  = parts[3].toUInt();
@@ -260,6 +263,9 @@ void QGeoSatelliteInfoSourceGpsd::readGSA(const char *data, int size)
   
   QList<QByteArray> parts = QByteArray::fromRawData(data, size).split(',');
   //int fixType = parts[2].toUInt();
+
+  if(!isReliableSatellite(parts[0]))
+      return;
 
   QSet<int> satsInUse;
   for(int i=3; i<15; ++i)
@@ -336,4 +342,9 @@ bool QGeoSatelliteInfoSourceGpsd::parseNmeaData(const char *data, int size)
   }
   
   return false;
+}
+
+bool QGeoSatelliteInfoSourceGpsd::isReliableSatellite(const QByteArray &messageId)
+{
+  return messageId.startsWith("$GP");
 }
