@@ -28,18 +28,21 @@
 #include "qgeopositioninfosource_gpsd.h"
 #include "qgeosatelliteinfosource_gpsd.h"
 
-QGeoPositionInfoSource *QGeoPositionInfoSourceFactoryGpsd::positionInfoSource(QObject *parent)
+QGeoPositionInfoSource *QGeoPositionInfoSourceFactoryGpsd::positionInfoSource(QObject *parent, const QVariantMap &parameters)
 {
+  Q_UNUSED(parameters);
   return new QGeoPositionInfoSourceGpsd(parent);
 }
 
-QGeoSatelliteInfoSource *QGeoPositionInfoSourceFactoryGpsd::satelliteInfoSource(QObject *parent)
+QGeoSatelliteInfoSource *QGeoPositionInfoSourceFactoryGpsd::satelliteInfoSource(QObject *parent, const QVariantMap &parameters)
 {
+  Q_UNUSED(parameters);
   return new QGeoSatelliteInfoSourceGpsd(parent);
 }
 
-QGeoAreaMonitorSource *QGeoPositionInfoSourceFactoryGpsd::areaMonitor(QObject *parent)
+QGeoAreaMonitorSource *QGeoPositionInfoSourceFactoryGpsd::areaMonitor(QObject *parent, const QVariantMap &parameters)
 {
   Q_UNUSED(parent);
+  Q_UNUSED(parameters);
   return 0;
 }

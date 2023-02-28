@@ -3,6 +3,7 @@
     "Provider": "gpsd",
     "Position": true,
     "Satellite": true,
+    "Testable": false,
     "Monitor": false,
     "Priority": 1001
 }

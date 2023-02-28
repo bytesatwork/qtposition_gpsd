@@ -85,7 +85,7 @@ QGeoSatelliteInfoSourceGpsd::reqTimerTimeout()
       stopUpdates();
   
   if(_reqDone != (ReqSatellitesInView | ReqSatellitesInUse))
-      emit requestTimeout();
+      emit errorOccurred(QGeoSatelliteInfoSource::UpdateTimeoutError);
 }
 
 QGeoSatelliteInfoSource::Error
@@ -111,7 +111,7 @@ QGeoSatelliteInfoSourceGpsd::requestUpdate(int timeout)
   
   if(timeout < minimumUpdateInterval())
   {
-    emit requestTimeout();
+    emit errorOccurred(QGeoSatelliteInfoSource::UpdateTimeoutError);
     return;
   }
   
@@ -137,7 +137,7 @@ void QGeoSatelliteInfoSourceGpsd::startUpdates()
     if(!_device)
     {
       _lastError = QGeoSatelliteInfoSource::AccessError;
-      emit QGeoSatelliteInfoSource::error(_lastError);
+      emit QGeoSatelliteInfoSource::errorOccurred(_lastError);
       return;
     }
     
